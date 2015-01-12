@@ -39,7 +39,7 @@ $ sudo docker run --name protractor -v /vagrant:/opt/protrator cfalguiere/protra
 
 Place your tests in the same directory than the Vagranfile and they will be available under /opt/protractor in the docker container.
 
-A same test file is provided in the *test/e2e/* folder.
+A sample test file is provided in the *test/e2e/* folder.
 
 ## Running the test suite against another docker container
 
