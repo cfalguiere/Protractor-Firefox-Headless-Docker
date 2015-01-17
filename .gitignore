@@ -33,4 +33,7 @@ node_modules
 # Vagrant
 .vagrant
 
+# Protractor temp directories
+*/.dbus
+*/.mozilla
 
