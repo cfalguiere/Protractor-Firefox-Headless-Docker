@@ -11,7 +11,7 @@ RUN npm update
 
 RUN webdriver-manager update
 
-ENV HOME /opt/protractor/app
+ENV HOME /opt/protractor/project
 WORKDIR /opt/protractor
 
 COPY scripts/ /opt/protractor/scripts/

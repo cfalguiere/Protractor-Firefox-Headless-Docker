@@ -10,5 +10,5 @@ if [[ ! -z $CONTAINER_ID ]]; then
   sleep 1
 fi
 
-sudo docker run  --name $CONTAINER_NAME  -v /vagrant/testapp:/opt/protractor/app -e TEST_FILE=test/e2e/protractor.conf.js $IMAGE_NAME
+sudo docker run  --name $CONTAINER_NAME  -v /vagrant/testproject:/opt/protractor/project -e TEST_FILE=test/e2e/protractor.conf.js $IMAGE_NAME
 #sudo docker run  --name protractor  -v /vagrant:/opt/protractor --link nginx_test:web protractor_image
