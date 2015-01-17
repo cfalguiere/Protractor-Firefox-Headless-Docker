@@ -1,9 +1,5 @@
 #!/bin/bash
 
-SCRIPTDIR=$(dirname $0)
-
-echo "Starting at $( date )"
-
 cd /opt/protractor/app
 
 echo '############################################################'
@@ -27,5 +23,5 @@ echo
 echo '############################################################'
 echo '############### Running Test suite'
 
-protractor test/e2e/protractor.conf.js
+protractor $TEST_FILE
 
