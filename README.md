@@ -34,19 +34,23 @@ All the files located in the same folder as Vagrantfile will be available under 
 Type the following at the vm's ssh prompt
 
 ```bash
-$ sudo docker run --name protractor -v /vagrant:/opt/protrator cfalguiere/protractor-firefox-headless
+$ sudo docker run --name protractor --volume /vagrant/testapp:/opt/protractor/app --env TEST_FILE=test/e2e/protractor.conf.js cfalguiere/protractor-firefox-headless
 ```
+A sample test file is provided in the *testapp/test/e2e/* folder.
 
-Place your tests in the same directory than the Vagranfile and they will be available under /opt/protractor in the docker container.
+The Angular app directory should be mounted as /opt/protractor/app in the docker container. Change /vagrant/app to whatever your app home is.
 
-A sample test file is provided in the *test/e2e/* folder.
+The test file is passed as to the container as an environment variable. Change test/e2e/protractor.conf.js to the path to the protractor test confiiuration file. The file should be relative to the folder mounted as a volume.
+
+
+
 
 ## Running the test suite against another docker container
 
 Use --link if the system under test is running in another docker container hosted on the same vm.
 
 ```bash
-sudo docker run  --name protractor  -v /vagrant:/opt/protractor --link nginx_test:web cfalguiere/protractor-firefox-headless
+sudo docker run  --name protractor  --volume /vagrant/testapp:/opt/protractor/app --env TEST_FILE=test/e2e/protractor.conf.js --link nginx_test:web cfalguiere/protractor-firefox-headless
 ```
 
 The docker container which name is *nginx_test* is linked under the name web to the docker contaienr. 
@@ -55,8 +59,6 @@ For instance, if a web servr is running on port 80 in nginx_test, the landing pa
 
 ## Building the protractor container
 
-Run the build.bash script.
-
-This will build the container image protractor_image.
+Run the build.bash script. This will build the container image protractor_image.
 
 
