@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /opt/protractor/app
+cd $HOME
 
 echo '############################################################'
 echo '############### Xvfb settings'
@@ -12,6 +12,7 @@ export DISPLAY=:21
 echo '############################################################'
 echo '############### Starting Webdriver and Http-server'
 
+# update app dependencies
 npm install
 
 webdriver-manager start &

@@ -11,10 +11,10 @@ RUN npm update
 
 RUN webdriver-manager update
 
-ENV HOME /opt/protractor
-WORKDIR $HOME/app
+ENV HOME /opt/protractor/app
+WORKDIR /opt/protractor
 
-COPY scripts/ $HOME/scripts/
+COPY scripts/ /opt/protractor/scripts/
 
 CMD ["/opt/protractor/scripts/run-e2e-tests.bash"]
 #CMD ["ls", "/opt/protractor/scripts"]

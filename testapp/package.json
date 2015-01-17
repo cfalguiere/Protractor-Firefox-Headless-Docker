@@ -1,0 +1,15 @@
+{
+  "name": "testapp",
+  "private": true,
+  "version": "0.0.0",
+  "description": "A sample test app",
+  "repository": "https://github.com/cfalguiere/Protractor-Firefox-Headless-Docker",
+  "license": "MIT",
+  "devDependencies": {
+  },
+  "scripts": {
+    "protractor": "sudo docker run  --name protractor  -v /vagrant/testapp:/opt/protractor/app -e TEST_FILE=test/e2e/protractor.conf.js cfalguiere/protractor-firefox-headless"
+
+",
+  }
+}
