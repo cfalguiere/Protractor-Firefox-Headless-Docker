@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:trusty
 # TODO tag
 
 RUN apt-get update
