@@ -1,6 +1,17 @@
 # Protractor-Firefox-Headless-Docker
 Run Protractor tests using Firefox headless in a docker container
 
+## Important note
+
+This Github repository is associated to the DockerHub repository [cfalguiere/Protractor-Firefox-Headless-Docker](https://registry.hub.docker.com/u/cfalguiere/protractor-firefox-headless/) and automatically built.
+
+For whatever reason, when the image is built on DockerHub it does not work properly.
+
+Another image has been built locally and pushed onto the repository [cfalguiere/Protractor-test](https://registry.hub.docker.com/u/cfalguiere/protractor-test/). This one works file. 
+
+Please use cfalguiere/protractor-test whereever cfalguiere/protractor-firefox-headless is used, or built the image by yourself with the script provided in the root of the project.
+
+
 ## Prerequisites to run the vagrant vm
 
 - vagrant
