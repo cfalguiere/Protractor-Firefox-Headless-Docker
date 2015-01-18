@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Brick Inventory</title>
+    <!--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="jquery.dropdown.css" />
+    <script type="text/javascript" src="jquery.dropdown.js"></script>
+
+    </head>
+
+<body ng-app="BrickInventoryApp" ng-controller="bricksController" >
+    <div class="panel panel-default">
+        <div class="panel-heading"><span style="font-size: 1.5em;color: #006666;">Brick Inventory</span></div>
+
+        <div class="panel-body">
+           <div class="container">
+               <ul class="row" >
+                   <div class="col-xs-4 col-sm-4 col-md-2"  style="margin-top: 2em">
+                        <ul class="row "><label>Set</label></ul>
+                        <ul class="row ">Wedo 9580-1</ul>
+                        <ul class="row " style="margin-top: 1;">
+                            <img src="img/bricks/9580-1.gif" width=80/>
+                        </ul>
+                   </div>
+                   <div class="col-xs-8 col-sm-8 col-md-3"  style="margin-top: 2em">
+                      <div class="row ">
+                        <div class="col-xs-8 col-sm-8 col-md-12">
+                            <ul class="row "><label>Briques</label></ul>
+                            <ul class="row ">
+                                <label><span style="font-size: 1.5em;color: #006666;">{{currentCount}} / {{totalCount}}</span></label> items
+                            </ul>
+                            <ul class="row ">
+                                <label><span style="font-size: 1.5em;color: #006666;">{{progressBar}}%
+                                    &nbsp;&nbsp;&nbsp;{{progressStatus}}</label>&nbsp;</span>
+                            </ul>
+                            <ul class="row ">
+
+                                <progress value="{{progressBar}}" max="100"></progress>
+                            </ul>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-12">
+                            <ul class="row ">&nbsp;</ul>
+                            <ul class="row ">
+                                <form ng-submit="resetCount()" >
+                                    <input type="submit" value="Reset Count">
+                                </form>
+                           </ul>
+                        </div>
+                       </div>
+                   </div>
+                   <div class="col-xs-4 col-sm-4 col-md-3" style="margin-top: 2em">
+                       <ul class="row" >
+                           <label>Color Filter</label>
+                           <span ng-if="selectedColor != null" >
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"
+                                     style="float:right;" ng-click="filterByColorId(null)" >
+                               </span>
+                               <img src="img/colors/{{selectedColor.name}}.png" width="20" style="float:right;" />
+                           </span>
+                       </ul>
+                       <ul class="row" >
+                           <div class="col-xs-3 col-sm-3 col-md-3" ng-repeat="color in colorsList">
+                               <img src="img/colors/{{color.name}}.png"
+                                    ng-click="filterByColorId(color.id)" width="30"/>
+                           </div>
+                       </ul>
+                   </div>
+                   <div class="col-xs-8 col-sm-8 col-md-4"  style="margin-top: 2em">
+                       <ul class="row" >
+                           <label>Shape Filter</label>
+                           <span ng-if="selectedShape != null" >
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"
+                                style="float:right;" ng-click="filterByShape(null)" />
+                               <img src="img/shapes/{{selectedShape}}.png" width="30" style="float:right;" />
+                          </span>
+                       </ul>
+                       <ul class="row" >
+                           <div class="col-xs-3 col-sm-3 col-md-3" ng-repeat="shape in shapesList">
+                                   <img src="img/shapes/{{shape}}.png"
+                                        ng-click="filterByShape(shape)" />
+                           </div>
+                       </ul>
+                   </div>
+               </ul>
+
+               <ul class="row" >
+                    <br/>
+               </ul>
+
+
+               <ul class="row"
+                   style="background-color: #EEEEEE;border-color: #EEEEEE; border-style: solid; border-width: 10px;">
+                   <div class="col-xs-4 col-sm-4 col-md-2"></div>
+                   <div class="col-xs-4 col-sm-4 col-md-2"><label>Quantity</label></div>
+                   <div class="col-xs-4 col-sm-4 col-md-2" style="text-align: right;"><label>Type</label></div>
+                   <div class="col-xs-12 col-sm-12 col-md-6"><label>Description</label></div>
+                </ul>
+
+               <ul class="row" ng-repeat="brick in bricksList"
+                   ng-show="(brick.show && brick.colorFilter && brick.shapeFilter)"
+                   style="border-color: #EEEEEE;border-bottom-style: solid;">
+                   <div class="col-xs-4 col-sm-4 col-md-2">
+                       <div style="margin-top: 0.2em;margin-bottom: 0.2em;">
+                            <img src="img/bricks/{{brick.item.itemId}}.gif" ng-click="found(brick)" />
+                       </div>
+                   </div>
+                   <div class="col-xs-5 col-sm-5 col-md-2">
+                       <div style="margin-top: 1em;">
+                            <div class="col-xs-12 col-sm-4">
+                              {{brick.count}}/{{brick.item.quantity}}
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-8">
+                                <button type="button" class="btn btn-default btn-xs" aria-label="Found 1"
+                                        ng-click="found(brick)" style="color: #004444;">
+                                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </button>
+                                <span ng-if="brick.item.quantity > 1" >
+                                    <button type="button" class="btn btn-default btn-xs" aria-label="Found All"
+                                            ng-click="foundAll(brick)" style="color: #005555;">
+                                      <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                    </button>
+                                </span>
+                            </div>
+                       </div>
+                   </div>
+                   <div class="col-xs-3 col-sm-3 col-md-2">
+                    <div style="margin-top: 0.2em;">
+                       <ul class="row" >
+                           <div class="col-xs-6 col-sm-6 col-md-4">
+                                 <img src="img/shapes/{{brick.item.groupName}}.png" width=30/>
+                           </div>
+                           <div class="col-xs-6 col-sm-6 col-md-4">
+                                <span ng-if="selectedShape != null">
+                                    <button type="button" class="btn btn-default btn-xs" aria-label="Filter Same"
+                                            ng-click="filterByShape(null)" style="margin-left: 0.1em;color: #005555;">
+                                      <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                                    </button>
+                               </span>
+                               <span ng-if="selectedShape == null">
+                                    <button type="button" class="btn btn-default btn-xs" aria-label="Filter Same"
+                                            ng-click="filterByShape(brick.item.groupName)" style="color: #005555;">
+                                      <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+                                    </button>
+                               </span>
+                           </div>
+                       </ul>
+                       <ul class="row" >
+                           <div class="col-xs-6 col-sm-6 col-md-4">
+                                  <img src="img/colors/{{brick.colorName}}.png"  width=25/>
+                           </div>
+                           <div class="col-xs-6 col-sm-6 col-md-4">
+                                <span ng-if="selectedColor != null" >
+                                    <button type="button" class="btn btn-default btn-xs" aria-label="Filter Same"
+                                            ng-click="filterByColorId(null)" style="margin-left: 0.1em;color: #006666;">
+                                      <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                                    </button>
+                                </span>
+                                <span ng-if="selectedColor == null" >
+                                    <button type="button" class="btn btn-default btn-xs" aria-label="Filter Same"
+                                            ng-click="filterByColorId(brick.item.colorId)" style="color: #006666;">
+                                      <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+                                    </button>
+                               </span>
+                           </div>
+                       </ul>
+
+                     </div>
+                   </div>
+                   <div class="col-xs-12 col-sm-12 col-md-5">
+                       <div style="margin-top: 1em;">
+                           {{brick.item.itemName}}
+                       </div>
+                   </div>
+                </ul>
+
+           </div>
+        </div>
+
+
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+  <script src="bricksController.js"></script>
+  <script src="services/bricksFactory.js"></script>
+  <script src="services/loaders.js"></script>
+  <script src="services/services.js"></script>
+        </div>
+    </div>
+</body>
+</html>
