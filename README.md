@@ -49,9 +49,9 @@ $ sudo docker run --name protractor --volume /vagrant/testapp:/opt/protractor/ap
 ```
 A sample test file is provided in the *testapp/test/e2e/* folder.
 
-The Angular app directory should be mounted as /opt/protractor/app in the docker container. Change /vagrant/app to whatever your app home is.
+The Angular app directory should be mounted as /opt/protractor/app in the docker container. Change /vagrant/testapp to whatever your app home is.
 
-The test file is passed as to the container as an environment variable. Change test/e2e/protractor.conf.js to the path to the protractor test confiiuration file. The file should be relative to the folder mounted as a volume.
+The test file is passed as to the container as an environment variable. Change test/e2e/protractor.conf.js to the path to the protractor test configuration file. The file should be relative to the folder mounted as a volume.
 
 
 
